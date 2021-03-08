@@ -8,11 +8,12 @@ router.get("/login", forwardAuthenticated, (req, res) => res.render("login"));
 
 router.post(
   "/login",
-  passport.authenticate("local", {
+  passport.authenticate("local" || "github", {
+    scope: ["user:email"],
     successRedirect: "/dashboard",
     failureRedirect: "/auth/login",
   })
-);
+); 
 
 router.get("/logout", (req, res) => {
   req.logout();
