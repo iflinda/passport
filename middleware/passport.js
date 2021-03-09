@@ -17,22 +17,27 @@ const localLogin = new LocalStrategy(
   }
 );
 
+const gitHubLogin = new GitHubStrategy(
+  {
+  clientID: "CLIENT ID HERE",
+  clientSecret: "CLIENT SECRET HERE",
+  callbackURL: "http://localhost:8000/auth/github/callback",
+  scope: ['user:email'],
+  },
+  (accessToken, refreshToken, profile, done) => {
+    const user = userController.getUserByGitHubIdOrCreate(profile);
+    return user
+      ? done(null, user)
+      : done(null, false, {
+          message: "Your login details are not valid. Please try again",
+      })
+    }
+);
+
 passport.serializeUser(function (user, done) {
   done(null, user.id);
 });
 
-passport.use(
-  new GitHubStrategy({
-  clientID: "4e06c176846902542991",
-  clientSecret: "479df230a189fb0e516e430eacc0b323a42b264f",
-  callbackURL: "http://localhost:8000/dashboard"
-},
-  function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ githubId: profile.id }, function (err, user) {
-      return cb(err, user);
-    });
-  }
-));
 
 passport.deserializeUser(function (id, done) {
   let user = userController.getUserById(id);
@@ -44,3 +49,6 @@ passport.deserializeUser(function (id, done) {
 });
 
 module.exports = passport.use(localLogin);
+module.exports = passport.use(gitHubLogin);
+
+
