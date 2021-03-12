@@ -2,6 +2,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const userController = require("../controllers/userController");
 const GitHubStrategy = require('passport-github2').Strategy;
+
 const localLogin = new LocalStrategy(
   {
     usernameField: "email",
@@ -50,5 +51,4 @@ passport.deserializeUser(function (id, done) {
 
 module.exports = passport.use(localLogin);
 module.exports = passport.use(gitHubLogin);
-
 

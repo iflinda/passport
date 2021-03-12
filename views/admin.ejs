@@ -1,4 +1,12 @@
+
 <h1 class="mt-4">Dashboard</h1>
-<h2 class="lead mb-3">Welcome <%= user.name %></h2>
-<p>Current Active Sessions:</p>
+<h2 class="lead mb-3">Welcome <%= user.name %></h2><br>
+<p>Current Active Sessions</p>
+<ul>
+    <% for (session in sessions) { %>
+        <li>SessionId:<%= sessions[session] %></li>
+        <li>UserId:<%= userId[session] %></li>
+        <a href="/remove?session=<%= sessions[session] %>&id=<%= userId[session] %>">Revoke User</a>
+    <% }; %> 
+</ul>
 <a href="/auth/logout" class="btn btn-secondary">Logout</a>
