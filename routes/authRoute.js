@@ -14,6 +14,8 @@ router.post(
   })
 ); 
 
+// Regular Dashboard
+
 router.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/auth/login");
@@ -21,6 +23,14 @@ router.get("/logout", (req, res) => {
 
 router.get("/github",
   passport.authenticate("github"));
+
+router.get("/github/callback",
+  passport.authenticate("github", {
+    successRedirect: "/dashboard",
+    failureRedirect: "/auth/login",
+    }
+  )
+);
 
 router.get("/github/callback",
   passport.authenticate("github", {

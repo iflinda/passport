@@ -12,4 +12,10 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
   });
 });
 
+router.get("/admin", isAdmin, (req, res) => {
+  res.render("admin", {
+    user: req.user.role,
+  });
+});
+
 module.exports = router;
