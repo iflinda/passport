@@ -22,12 +22,11 @@ function isUserValid(user, password) {
 }
 
 const getUserByGitHubIdOrCreate = (profile) => {
-  let name;
+  let username;
   const id = parseInt(profile.id)
-  name = profile.username;
-  console.log(profile)
+  username = profile.username;
   if (!userModel.findById(id)) {
-    return userModel.addUser(id, name);
+    return userModel.addUser(id, username);
   } else {
     return userModel.findById(id)
   }
